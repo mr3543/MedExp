@@ -3,6 +3,13 @@ from flask import Flask, url_for, request, \
 from time import sleep
 from werkzeug.security import check_password_hash, \
                               generate_password_hash
+
+from tornado.wsgi import WSGIContainer
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+from tornado.log import enable_pretty_logging
+import argparse
+
 import pymongo
 import sqlite3
 import database
@@ -11,8 +18,9 @@ import recommend
 from config import Config
 
 app = Flask(__name__)
-app.secret_key = b"\xb0\xcd\x1b4\xcc\x19\x14\x19\xca'\xaf\xad^\xc0\x9b\x82"
-  
+with open('secret_key.txt','rb') as f:
+    app.secret_key = f.read()
+
 cfg  = Config()
 srch = search.Search(cfg.num_search_results)
 
@@ -189,5 +197,20 @@ def login_user():
         return -1
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p',dest='prod',action='store_true')
+    parser.add_argument('--port',dest='port',type=int,default=5000)
+    args = parser.parse_args()
+    if args.prod:
+        print('running in production')
+        enable_pretty_logging()
+        http_server = HTTPServer(WSGIContainer(app))
+        http_server.listen(args.port)
+        IOLoop.instance().start()
+    else:
+        print('running in debug')
+        app.debug = True
+        app.run(port=args.port,host = '0.0.0.0')
+
+

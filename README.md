@@ -15,6 +15,7 @@ To host the site you must have the following dependencies installed:
 - sklearn
 - flask
 - werkzeug
+- tornado
 
 First we need to download the data, set up our databases and build the tfidf vectors.
 
