@@ -35,8 +35,11 @@ $ python routes.py
 We use mongodb to provide text search for the articles in our dataset. 
 
 `search.py` - handles the search logic
+
 `recommend.py` - handles training new SVM when user makes a recommendation request
+
 `database.py` - interface to our sqlite database 
+
 `routes.py` - contains web endpoints
 
 
