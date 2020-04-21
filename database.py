@@ -47,6 +47,10 @@ class Db:
         return None
 
     def get_articles_by_id(self,user_id,article_ids):
+        # we join on the user table to get the status of each 
+        # article, i.e. saved or unsaved - this info is used to 
+        # decorate buttons next to article links 
+
         sql = 'select title,url,articles.article_id,t.lib_id ' \
               'from articles ' \
               'left join (select * from library where user_id = ?) as t ' \

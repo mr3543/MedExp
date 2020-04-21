@@ -17,6 +17,7 @@ cfg  = Config()
 srch = search.Search(cfg.num_search_results)
 
 def fill_data(rows,user_id):
+    # helper to fill dict from database queries 
     data = {'titles':[],'links':[],'statuses':[],'article_ids':[],'user_id':user_id}
     for r in rows:
         title = r['title']
@@ -33,6 +34,7 @@ def fill_data(rows,user_id):
 
 @app.route('/')
 def home():
+    # landing page
     user_id = login_user()
     db = database.Db(cfg.db_file)
     num_articles = cfg.num_articles_home
@@ -121,7 +123,6 @@ def search_articles():
 def save_article(article_id):
     user_id = login_user()
     if user_id < 0:
-        #flash('Login to save articles')
         return {'status':False}
     else:
         db = database.Db(cfg.db_file)
@@ -134,7 +135,6 @@ def remove_article(article_id):
     user_id = login_user()
     if user_id < 0:
         #should never hit this
-        #flash('Login to remove articles')
         return {'status':False}
     else:
         db = database.Db(cfg.db_file)
@@ -178,6 +178,8 @@ def recs():
 
 
 def login_user():
+    # gets the user id if we've previously stored it
+    # give an un-logged-in user a user_id of -1
     user_id = session.get('user_id')
     db = database.Db(cfg.db_file)
     if user_id:

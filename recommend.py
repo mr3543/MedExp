@@ -8,8 +8,9 @@ class Rec:
         self.db = db
         self.X = pickle.load(open(xfile,'rb'))
         self.num_recs = num_recs
-
+    
     def _get_user_yvec(self,user_id):
+        # gets the user's saved articles and encodes to a one-hot target vector
         rows = self.db.get_user_articles(user_id)
         if len(rows) == 0: return None
         articles = np.array([rows[i]['article_id'] - 1 for i in range(len(rows))])
@@ -25,6 +26,8 @@ class Rec:
         return clf
         
     def get_user_recs(self,user_id):
+        # scores the articles in the database according to the fitted model,
+        # filters out articles that have been saved already
         yvec = self._get_user_yvec(user_id)
         if yvec is None: return None
         clf = self._train_svm(yvec)
