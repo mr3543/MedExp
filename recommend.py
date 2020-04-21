@@ -2,7 +2,7 @@ from sklearn import svm
 import pickle
 import numpy as np
 
-class Rec():
+class Rec:
     
     def __init__(self,db,xfile,num_recs):
         self.db = db

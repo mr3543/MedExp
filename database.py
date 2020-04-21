@@ -2,7 +2,7 @@ import sqlite3
 import numpy as np
 import time
 
-class Db(object):
+class Db:
     def __init__(self,db_file):
         self.conn = sqlite3.connect(db_file)
         self.conn.row_factory = sqlite3.Row
