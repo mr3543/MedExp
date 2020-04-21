@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <title>MedExp</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script> 
+
+        function onready(){
+            $(".save_remove").click(function(){
+                var aid = $(this).attr("id");
+                var bttn_type = $(this).attr("title");
+                var url = "/" + bttn_type + "/" + aid;
+                $.get(url,function(data,status,xhr){
+                    console.log(data);
+                    if (data.status){
+                        if (bttn_type === "save"){
+                            $("#"+aid).attr("title","remove");
+                            $("#"+aid).html("remove");
+                        } else {
+                            $("#"+aid).attr("title","save");
+                            $("#"+aid).html("save");
+                        }
+                    } else{
+                        alert('Please login to save articles');
+                    }
+                });
+            });
+            
+        }
+        $(document).ready(onready);
+
+    </script>
+    </head>
+    <body>
+        <div id = "header">
+            <div id = "logo">
+                <a id = "main_logo" href = "{{ url_for('home') }}">MedExp</a>
+                <div id = "sub_logo">
+                Browse Medium articles. Save and get recommendations
+                </div>
+            </div>
+            <div id = "login_logout">
+                {% if user_id < 0 %} 
+                <div id = "login_signup">
+                    <button id = "login_bttn" onclick = "window.location.href = '/login';">
+                    Login
+                    </button>
+                    <button id = "signup_bttn" onclick ="window.location.href = '/signup';">
+                    Signup
+                    </button>
+                </div>
+                {% endif %}
+                {% if user_id >= 0 %}
+                <div id = "logout">
+                    <button id = "logout_bttn" onclick = "window.location.href = '/logout';">
+                    Logout
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div id = "main">
+            <div id = "search">
+                <form action = "{{ url_for('search_articles') }}" method ="get">
+                    Search: 
+                    <input type = "text" name = "search_token" class = "input-no-border">
+                    <button type = "submit" value = "Search" class = "btn-fancy">GO</button>
+                </form>
+            </div>
+            <div id = "page_tabs">
+                <div class = "tablinkdiv" id = "tabhome">
+                    <a class = "tablink" href = "{{ url_for('home') }}">recent</a>
+                </div>
+                <div class = "tablinkdiv" id = "tablibrary">
+                    <a class = "tablink" href = "{{ url_for('library') }}">library</a>
+                </div>
+                <div class = "tablinkdiv" id = "tabrecommended">
+                    <a class = "tablink" href= "{{ url_for('recs') }}">recommended</a>
+                </div>
+            </div>
+        </div>
+        {% block articles_list %}
+        {% endblock %}
+
+    </body>
+</html>

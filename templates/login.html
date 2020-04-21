@@ -1,0 +1,32 @@
+{% extends "login_base.html" %}
+
+{% block title %}Medexp | Login{% endblock %}
+
+{% block login_body %}
+
+<div id = "user_login">
+    <div id = "login_text" >Login</div>
+    <div id = "login_bars">
+        <form action = "{{ url_for('user_login') }}" method = "post">
+            <label class = "login_label ">Username:</label>
+            <input type = "text" name = "username" class = "input-no-border">
+            <br>
+            <label class = "login_label " id = "login_pword_lab">Password:</label>
+            <input type = "password" name = "password" class = "input-no-border">
+            <button type = "submit" class = "btn-fancy">Submit</button>
+        </form>
+    </div>
+</div>
+<div id = "message_box">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+
+{% endblock %}

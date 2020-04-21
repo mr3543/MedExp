@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block articles_list %} 
+<div id = "articles_div" >
+</div>
+<script>
+
+    function addTitles(titles,articles_id,links,statuses,user_id){
+        
+        for(var i=0; i < titles.length; i++){                
+            
+            var linediv = document.createElement("div");
+            var linkdiv = document.createElement("div");
+            var bttndiv = document.createElement("div");
+
+            var newlink = document.createElement("a");
+            var newbttn = document.createElement("button");
+            
+            linediv.setAttribute("class","linediv");
+            linkdiv.setAttribute("class","linkdiv");
+            bttndiv.setAttribute("class","bttndiv");
+
+            newlink.setAttribute("href",links[i]);
+            newlink.innerHTML = titles[i];
+            newlink.setAttribute("class","article_link");
+            
+            newbttn.setAttribute("id",articles_id[i].toString());
+            newbttn.setAttribute("class","save_remove");
+            
+            if (statuses[i] === "unsaved") {
+                newbttn.setAttribute("title", "save");
+                newbttn.innerHTML = "save";
+            } else {
+                newbttn.setAttribute("title","remove"); 
+                newbttn.innerHTML = "remove";
+            }
+            
+            linkdiv.appendChild(newlink);
+            bttndiv.appendChild(newbttn);
+            
+            linediv.appendChild(linkdiv);
+            linediv.appendChild(bttndiv);
+
+            document.getElementById("articles_div").append(linediv);
+        
+        }
+    }
+    
+    var data = {{ data | tojson }};
+    var msg  = {{ msg  | tojson }};
+    var page_type  = {{ page_type | tojson }};
+    
+    if (page_type !== "search"){
+        var selected_tab = "tab".concat(page_type);
+        document.getElementById(selected_tab).setAttribute("id","tabselected");
+    }
+    
+
+    if (data === null) {
+        document.getElementById("articles_div").innerHTML = msg;
+
+    } else {
+        titles = data['titles'];
+        article_ids = data['article_ids'];
+        links = data['links'];
+        statuses = data['statuses'];
+        addTitles(titles,article_ids,links,statuses);
+    }
+</script>
+
+{% endblock %} 
