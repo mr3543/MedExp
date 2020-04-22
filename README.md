@@ -1,7 +1,7 @@
 
 # medium explorer
 
-This project is a web-service which allows users to browse medium articles and find topics of interest. A user can sign in and get individualized article recommendations based on articles they add to a library. 
+This project is a web-service which allows users to browse medium articles and find topics of interest. A user can sign in and get individualized article recommendations based on articles they add to a library. Visit the site at www.medexp.xyz
 
 ### code overview
 
