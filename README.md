@@ -40,6 +40,12 @@ Running `build_db.py` may take several minutes. Then we can start the service.
 $ python routes.py
 ```
 
+If running for the first time you will need to generate a secret key. 
+
+```bash
+$ python make_secret_key.py
+```
+
 We use mongodb to provide text search for the articles in our dataset. 
 
 `search.py` - handles the search logic
