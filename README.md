@@ -17,7 +17,14 @@ To host the site you must have the following dependencies installed:
 - werkzeug
 - tornado
 
-First we need to download the data, set up our databases and build the tfidf vectors.
+First we need to download the data, set up our databases and build the tfidf vectors. If you are installing mongodb for the first time you may need to run the following: 
+
+```bash
+$ sudo mkdir -p /data/db
+$ sudo chown mongodb:mongodb /data/db
+```
+
+To download the data and build the tfidf vectors run:
 
 ```bash
 $ chmod +x data/dl_data.sh
