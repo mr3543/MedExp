@@ -1,5 +1,4 @@
-from flask import Flask, 
-                  render_template, redirect, flash, session, Response
+from flask import Flask,render_template, redirect, flash, session, Response
 from time import sleep
 from werkzeug.security import check_password_hash, \
                               generate_password_hash
