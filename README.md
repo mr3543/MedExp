@@ -5,7 +5,7 @@ This project is a web-service which allows users to browse medium articles and f
 
 ### code overview
 
-In order to serve recommendations we need to create tfidf vectors for each article in our database. When a user requests recommendations we take the articles they've saved to thier library and fit a SVM which uses the tfidf vectors to attempt to classify saved and not-saved articles. We use the scores from this SVM to rank article suggestions. 
+In order to serve recommendations we need to create tfidf vectors for each article in our database. When a user requests recommendations we take the articles they've saved to their library and fit a SVM which uses the tfidf vectors to classify saved vs not-saved articles. We use the scores from this SVM to rank article suggestions. 
 
 To host the site you must have the following dependencies installed: 
 
@@ -33,17 +33,16 @@ $ chmod +x db_create.sh
 $ ./db_create.sh
 $ python build_db.py
 ```
+If running for the first time you will need to generate a secret key. 
+
+```bash
+$ python make_secret_key.py
+```
 
 Running `build_db.py` may take several minutes. Then we can start the service.
 
 ```bash
 $ python routes.py
-```
-
-If running for the first time you will need to generate a secret key. 
-
-```bash
-$ python make_secret_key.py
 ```
 
 We use mongodb to provide text search for the articles in our dataset. 
