@@ -2,6 +2,7 @@ import sqlite3
 import numpy as np
 import time
 
+# this is a comment
 class Db:
     def __init__(self,db_file):
         self.conn = sqlite3.connect(db_file)

@@ -16,6 +16,7 @@ import search
 import recommend
 from config import Config
 
+# this is a comment
 app = Flask(__name__)
 with open('secret_key.txt','rb') as f:
     app.secret_key = f.read()
